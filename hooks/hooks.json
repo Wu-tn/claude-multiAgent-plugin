@@ -1,0 +1,4 @@
+{
+  "description": "Native planner and subagent routing",
+  "modules": ["./register.mjs"]
+}

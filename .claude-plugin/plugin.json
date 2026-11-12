@@ -1,0 +1,7 @@
+{
+  "name": "multiagent",
+  "version": "0.1.0",
+  "description": "Planner-led multi-model subagents with a dependency-aware task board and explicit acceptance.",
+  "author": { "name": "ppxstark" },
+  "license": "MIT"
+}

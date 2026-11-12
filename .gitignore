@@ -1,0 +1,5 @@
+node_modules/
+.claude-plugin/types/
+.claude-plugin/tsconfig.json
+.claude/multiagent.json
+*.log

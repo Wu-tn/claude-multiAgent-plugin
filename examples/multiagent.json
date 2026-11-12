@@ -1,0 +1,14 @@
+{
+  "models": {
+    "fast": "haiku",
+    "coding": "sonnet",
+    "reasoning": "opus",
+    "planning": "opus",
+    "review": "opus"
+  },
+  "maxParallel": 2,
+  "maxTasks": 16,
+  "maxAttempts": 2,
+  "maxTotalSpawns": 24,
+  "maxTurns": 30
+}

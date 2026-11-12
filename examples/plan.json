@@ -1,0 +1,11 @@
+{
+  "action": "create",
+  "goal": "定位并修复登录接口偶发超时，补充回归验证",
+  "tasks": [
+    { "id": "inspect", "role": "explorer", "goal": "找到登录请求链、超时设置和相关测试", "scope": ["."], "acceptance": ["返回相关文件、函数与现有测试位置"] },
+    { "id": "diagnose", "role": "debugger", "goal": "根据证据定位超时原因并提出最小修复方案", "dependsOn": ["inspect"], "scope": ["."], "complexity": "complex", "acceptance": ["解释触发条件，给出可验证假设和修改位置"] },
+    { "id": "fix", "role": "implementer", "goal": "实施经确认的修复并添加必要回归测试", "dependsOn": ["diagnose"], "scope": ["."], "acceptance": ["保留其他改动", "回归测试覆盖超时触发条件"] },
+    { "id": "verify", "role": "verifier", "goal": "运行针对性回归与集成检查", "dependsOn": ["fix"], "scope": ["."], "acceptance": ["记录实际运行命令、退出码与结果，说明未能验证的部分"] },
+    { "id": "review", "role": "reviewer", "goal": "独立检查修复是否引入行为回归", "dependsOn": ["verify"], "scope": ["."], "acceptance": ["对照需求和改动给出有证据的结论"] }
+  ]
+}
