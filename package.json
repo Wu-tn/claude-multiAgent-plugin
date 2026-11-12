@@ -5,12 +5,18 @@
   "type": "module",
   "description": "Planner-led, multi-model orchestration for Claude Code Mods",
   "scripts": {
-    "test": "node --test tests/core.test.mjs",
+    "test": "tsc -p tsconfig.test.json && node --test tests/core.test.mjs",
+    "typecheck": "tsc -p tsconfig.json",
     "test:host": "claude plugin test .",
     "test:e2e": "node tests/cli-smoke.mjs",
     "validate": "claude plugin validate .",
     "check": "npm test && npm run validate && npm run test:host"
   },
-  "engines": { "node": ">=20" },
-  "license": "MIT"
+  "engines": {
+    "node": ">=20"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "5.9.3"
+  }
 }

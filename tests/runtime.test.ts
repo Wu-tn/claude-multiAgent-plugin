@@ -30,6 +30,29 @@ test('loads real host hooks, resolves model config and keeps routing opt-in', as
   expect(config.ignoredGlobalSubagentModel).toBe(true);
 });
 
+test('restores an accepted task saved by the JavaScript version', async ($, on) => {
+  setup(on, {
+    saved: {
+      'session:test-session': {
+        version: 1, enabled: true, cwd: 'C:/project',
+        board: {
+          version: 1, goal: 'Existing work', createdAt: 1, totalSpawns: 1, notifiedSpawns: 1,
+          tasks: [{
+            ...spec('a'), context: '', dependsOn: [], complexity: 'normal',
+            attempts: 1, history: [], status: 'done', agentId: 'worker-a',
+            route: { profile: 'fast', model: 'fast-model' }, startedAt: 2, finishedAt: 3,
+            report: 'Found src/a.ts', reason: 'answer', review: 'Inspected the cited file',
+          }],
+        },
+      },
+    },
+  });
+  const status = readBoard(await $.tool.call(call('status')));
+  expect(status.enabled).toBe(true);
+  expect(status.tasks[0].status).toBe('done');
+  expect(status.tasks[0].review).toBe('Inspected the cited file');
+});
+
 test('dispatches two workers, records completion, and queues exactly one planner continuation', async ($, on) => {
   const spawned = [], notifications = [], agents = [];
   const clock = setup(on, { agents });

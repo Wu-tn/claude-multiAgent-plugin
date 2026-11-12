@@ -51,11 +51,15 @@ claude --plugin-dir .
 
 | 文件 | 内容 |
 | --- | --- |
-| [`hooks/register.mjs`](hooks/register.mjs) | 命令、工具、原生子 agent 派发与续接 |
-| [`lib/board.mjs`](lib/board.mjs) | 任务图、依赖、并发与状态流转 |
-| [`lib/config.mjs`](lib/config.mjs) | 角色档位、设置解析和重试路由 |
-| [`lib/prompts.mjs`](lib/prompts.mjs) | 主模型、子 agent 指令和工具参数 |
+| [`hooks/register.ts`](hooks/register.ts) | 命令、工具、原生子 agent 派发与续接 |
+| [`lib/board.ts`](lib/board.ts) | 任务图、依赖、并发与状态流转 |
+| [`lib/config.ts`](lib/config.ts) | 角色档位、设置解析和重试路由 |
+| [`lib/prompts.ts`](lib/prompts.ts) | 主模型、子 agent 指令和工具参数 |
 
-在插件目录运行 `npm run check`，检查任务图、模型路由、原生 hooks 和插件清单。`npm run test:e2e` 使用回环地址上的模拟 API 验证真实 CLI 派发和回报流程。实际网关需支持 Anthropic Messages API、流式输出与工具调用，运行时可用 `/ma config` 检查解析出的 ID。
+Claude Code 直接加载 TypeScript 源码，使用插件无需构建。开发时先运行 `npm ci` 安装 TypeScript，再运行 `npm run check` 检查任务图、模型路由、原生 hooks 和插件清单。
+
+完整类型检查使用本机 Claude Code 生成的 API 声明。在仓库根目录交互式启动一次 `claude --plugin-dir .`，待 `.claude-plugin/types/` 生成后运行 `npm run typecheck`。
+
+`npm run test:e2e` 使用回环地址上的模拟 API 验证真实 CLI 派发和回报流程。实际网关需支持 Anthropic Messages API、流式输出与工具调用，运行时可用 `/ma config` 检查解析出的 ID。
 
 接口参考 [Claude Code Mods API](https://code.claude.com/docs/en/plugins/mods/api)。

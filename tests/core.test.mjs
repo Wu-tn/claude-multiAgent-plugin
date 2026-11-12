@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { resolveConfig, route } from '../lib/config.mjs';
-import { createBoard, addTasks, reserve, bindAgent, complete, review, retry, cancel, recover, view, conflicts } from '../lib/board.mjs';
+import { resolveConfig, route } from '../.test-build/config.js';
+import { createBoard, addTasks, reserve, bindAgent, complete, review, retry, cancel, recover, view, conflicts } from '../.test-build/board.js';
 const config = resolveConfig();
 const task = (id, extra = {}) => ({ id, role: 'explorer', goal: `Inspect ${id}`, acceptance: ['Return concrete evidence'], ...extra });
 const board = (tasks = [task('a')]) => createBoard('Example goal', tasks, config);

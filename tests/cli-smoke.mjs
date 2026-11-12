@@ -39,6 +39,7 @@ const workerSystems = new Map();
 const plannerModels = [];
 const requestPaths = [];
 let continued = false;
+let plannerInstructions = false;
 let lastMessages = '';
 let sequence = 0;
 const server = createServer(async (request, response) => {
@@ -70,6 +71,7 @@ const server = createServer(async (request, response) => {
     const step = plannerModels.length;
     plannerModels.push(body.model);
     lastMessages = messages;
+    if (step === 0) plannerInstructions = userMessages.some(message => message.includes('You are the main planner and acceptance reviewer'));
     if (step === 3) continued = userMessages.some(message => message.includes('Worker batch finished'));
     const action = actions[step];
     if (action && !body.tools?.some(spec => spec.name === tool)) {
@@ -142,6 +144,7 @@ try {
   assert.match(workerSystems.get('explore') ?? '', /Inspect the project and find concrete paths/);
   assert.match(workerSystems.get('diagnose') ?? '', /Analyze causes and competing hypotheses/);
   assert.ok(plannerModels.length >= 7 && plannerModels.every(model => model === 'smoke-planner'), 'Planner model drifted');
+  assert.ok(plannerInstructions, 'Planner instructions missing from the initial request');
   assert.ok(continued, 'Worker completion did not queue the continuation');
   assert.ok(tasks.every(task => lastMessages.includes('Synthetic evidence for ' + task.id)), 'Worker report missing from planner context');
   const lastToolResult = stdout.trim().split('\n').map(JSON.parse).findLast(event => event.tool_use_result);
